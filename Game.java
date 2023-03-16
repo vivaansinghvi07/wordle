@@ -3,7 +3,7 @@ import java.util.*;
 public class Game {
 
     // final strings
-    public final String ALPHABET = "abcdefghijklmnopqrstuvwxyz";
+    private final String ALPHABET = "abcdefghijklmnopqrstuvwxyz";
 
     // stores the word
     private String word;
@@ -19,6 +19,12 @@ public class Game {
 
     // stores the statuses for each letter
     private String[] letterStatus;
+
+    // stores a special message that is displayed when the player does something wrong
+    private String specialMessage;
+
+    // stores if game is over: 1 for a win and negative 1 for a loss
+    public int gameOver;
 
     // constructor
     public Game(String[] words, Input in) {
@@ -42,6 +48,9 @@ public class Game {
         for (int i = 0; i < 26; i++) {
             this.letterStatus[i] = Colors.RESET;
         }
+
+        // sets game over to be false
+        this.gameOver = 0;
     }
 
     // ASSUMES WORDS ARE 5 CHARACTERS LONG - returns a unique integer for each word
@@ -69,13 +78,13 @@ public class Game {
 
         // returns if the length is not 5
         if (guess.length() != 5) {
-            // TODO: Make it print something
+            this.specialMessage = "Word length must be 5!";
             return;
         }
 
         // checks if the guess is a valid one
         if (this.dict[wordToInt((guess))] == false) {
-            // TODO: Make it print something
+            this.specialMessage = "This word is not in our dictionary!";
             return;
         }
 
@@ -84,10 +93,20 @@ public class Game {
 
         // checks for a win
         if (this.word.equals(guess)) {
-            // TODO: Code win
+
+            // ends the game 
+            this.gameOver = 1;
             return;
+
         }
 
+        // checks if out of moves
+        if (this.guesses.size() >= 6) {
+
+            // ends the game
+            this.gameOver = -1;
+            return;
+        }
     }
 
     // displays the game
