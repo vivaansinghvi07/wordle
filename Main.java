@@ -7,8 +7,18 @@ public class Main {
         // gets a list of all possible wordle words
         String[] words = getWords("wordlewords.txt");
 
+        // creates the input object
+        Input in = new Input();
+
         // creates a game
-        Game game = new Game(words);
+        Game game = new Game(words, in);
+
+        // plays game sequence
+        while (true) {
+            Text.clear();
+            System.out.println(game);
+            game.getGuess();
+        }
         
     }
 
