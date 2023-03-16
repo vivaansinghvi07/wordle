@@ -15,9 +15,23 @@ public class Main {
 
         // plays game sequence
         while (true) {
+            // displays game and gets move
             Text.clear();
             System.out.println(game);
             game.getGuess();
+
+            // checks for the game being over
+            if (game.gameOver != 0) {
+                break;
+            }
+        }
+
+        // winning and losing sequences
+        if (game.gameOver == 1) { 
+            System.out.println(game + "\n\n" + "You won! Thanks for playing!");
+        } else {
+            System.out.println(game);
+            System.out.println("\nYou lost! The word was: " + Colors.GREEN_BOLD_BRIGHT + game.getWord() + Colors.RESET + ". Thanks for playing!");
         }
         
     }
