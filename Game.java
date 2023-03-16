@@ -193,7 +193,7 @@ public class Game {
             counts[c - 'a']++;
         }
 
-        // checks for matches and makes the color green if so, otherwise if it's contained make it yellow, and if its not in make it white
+        // checks for matches and assigns color green
         for (int i = 0; i < 5; i++) {
 
             // makes the color green and subtracts the count occurnece
@@ -201,9 +201,14 @@ public class Game {
                 colors[i] = Colors.GREEN_BOLD_BRIGHT;
                 counts[guess[i] - 'a']--;
             } 
-            
+
+        }
+
+        // assigns yellows if there is enough of the letter in the word itself
+        for (int i = 0; i < 5; i++) {
+
             // limits the number of yellows (you cannot have two yellow a's when the original word only has one a)
-            else if (counts[guess[i] - 'a'] > 0) {
+            if (counts[guess[i] - 'a'] > 0) {
                 colors[i] = Colors.YELLOW_BOLD_BRIGHT;
                 counts[guess[i] - 'a']--;
             } 
@@ -212,6 +217,7 @@ public class Game {
             else {
                 colors[i] = Colors.RESET;
             }
+
         }
 
         // fills output
