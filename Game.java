@@ -125,11 +125,11 @@ public class Game {
 
         // goes through every character in the guess - if the guess matches, make it green, if the word contains a letter of the guess, make it yellow, if its not contained, make it red
         for (int i = 0; i < 5; i++) {
-            if (word[i] == guess[i]) {
+            if (word[i] == guess[i]) {                                          // if the guess matches make green
                 this.editLetterStatus(word[i], Colors.GREEN_BOLD_BRIGHT);
-            } else if (this.word.contains("" + guess[i])) {
+            } else if (this.word.contains("" + guess[i])) {                     // if the word contains a letter of the guess make it yellow
                 this.editLetterStatus(guess[i], Colors.YELLOW_BOLD_BRIGHT);
-            } else {
+            } else {                                                            // otherwise make it blank
                 this.editLetterStatus(guess[i], "");
             }
         }
@@ -137,18 +137,18 @@ public class Game {
         // creates and returns output
         String output = new String();
         for (int i = 0; i < 26; i++) {
-            output += this.letterStatus[i] + (this.letterStatus[i] == "" ? " " : ALPHABET.charAt(i));
+            output += this.letterStatus[i] + (this.letterStatus[i] == "" ? " " : ALPHABET.charAt(i)); // checks for a blank letter
         }
         return output + Colors.RESET;
     }
 
     // makes an edit in letter status
     private void editLetterStatus(char letter, String color) {
-        if (color == Colors.GREEN_BOLD_BRIGHT) {
+        if (color == Colors.GREEN_BOLD_BRIGHT) {                        // if the intended change is green go ahead and do it
             this.letterStatus[letter - 'a'] = color;
-        } else if (this.letterStatus[letter - 'a'] == Colors.RESET) {
+        } else if (this.letterStatus[letter - 'a'] == Colors.RESET) {   // otherwise make the intended change if the thing is blank
             this.letterStatus[letter - 'a'] = color;
-        } else {
+        } else {                                                        // otherwise do nothing
             return;
         }
     }
