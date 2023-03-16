@@ -1,5 +1,3 @@
-import java.io.*;
-
 public class Text {
     
     // clears the console
