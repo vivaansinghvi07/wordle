@@ -49,8 +49,9 @@ public class Game {
             this.letterStatus[i] = Colors.RESET;
         }
 
-        // sets game over to be false
+        // sets starting values
         this.gameOver = 0;
+        this.specialMessage = "Enter your guess below.";
     }
 
     // ASSUMES WORDS ARE 5 CHARACTERS LONG - returns a unique integer for each word
@@ -116,7 +117,11 @@ public class Game {
         String output = new String();
 
         // prints the alphabet
-        output += this.getAlphabet() + "\n";
+        output += this.getAlphabet() + "\n__________________________\n";
+
+        // prints the special message
+        output += "\n" + this.specialMessage + "\n__________________________\n";
+        this.specialMessage = "Enter your guess below.";
 
         // goes through each guess and prints it
         for (String guess : guesses) {
