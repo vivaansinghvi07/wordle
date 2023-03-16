@@ -222,4 +222,9 @@ public class Game {
         return output;
 
     }
+
+    // gets the word
+    public String getWord() {
+        return this.word;
+    }
 }
