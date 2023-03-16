@@ -2,6 +2,9 @@ import java.util.*;
 
 public class Game {
 
+    // final strings
+    public final String ALPHABET = "abcdefghijklmnopqrstuvwxyz";
+
     // stores the word
     private String word;
 
@@ -13,6 +16,9 @@ public class Game {
 
     // stores an input source
     private Input in;
+
+    // stores the statuses for each letter
+    private String[] letterStatus;
 
     // constructor
     public Game(String[] words, Input in) {
@@ -30,6 +36,12 @@ public class Game {
 
         // assigns the input
         this.in = in;
+
+        // creates the statuses for the alphabet
+        this.letterStatus = new String[26];
+        for (int i = 0; i < 26; i++) {
+            this.letterStatus[i] = Colors.RESET;
+        }
     }
 
     // ASSUMES WORDS ARE 5 CHARACTERS LONG - returns a unique integer for each word
@@ -84,6 +96,9 @@ public class Game {
         // creates output
         String output = new String();
 
+        // prints the alphabet
+        output += this.getAlphabet() + "\n";
+
         // goes through each guess and prints it
         for (String guess : guesses) {
             output += "\n" + this.getColoredWord(guess) + Colors.RESET;
@@ -91,9 +106,55 @@ public class Game {
 
         return output;
     }
+
+    // gets the alphabet showing available letters
+    private String getAlphabet() {
+
+        // gets the most recent guess and makes updates based off it
+        char[] guess;
+
+        // if there have been no guesses return just the alphabet
+        try {
+            guess = this.guesses.get(this.guesses.size() - 1).toCharArray();
+        } catch (Exception e) {
+            return Colors.RESET + ALPHABET;
+        }
+
+        // converts word to character array
+        char[] word = this.word.toCharArray();
+
+        // goes through every character in the guess - if the guess matches, make it green, if the word contains a letter of the guess, make it yellow, if its not contained, make it red
+        for (int i = 0; i < 5; i++) {
+            if (word[i] == guess[i]) {
+                this.editLetterStatus(word[i], Colors.GREEN_BOLD_BRIGHT);
+            } else if (this.word.contains("" + guess[i])) {
+                this.editLetterStatus(guess[i], Colors.YELLOW_BOLD_BRIGHT);
+            } else {
+                this.editLetterStatus(guess[i], "");
+            }
+        }
+
+        // creates and returns output
+        String output = new String();
+        for (int i = 0; i < 26; i++) {
+            output += this.letterStatus[i] + (this.letterStatus[i] == "" ? " " : ALPHABET.charAt(i));
+        }
+        return output + Colors.RESET;
+    }
+
+    // makes an edit in letter status
+    private void editLetterStatus(char letter, String color) {
+        if (color == Colors.GREEN_BOLD_BRIGHT) {
+            this.letterStatus[letter - 'a'] = color;
+        } else if (this.letterStatus[letter - 'a'] == Colors.RESET) {
+            this.letterStatus[letter - 'a'] = color;
+        } else {
+            return;
+        }
+    }
     
     // colors a guess according to the word
-    public String getColoredWord(String guessIn) {
+    private String getColoredWord(String guessIn) {
 
         // stores the colors
         String[] colors = new String[5];
