@@ -161,7 +161,7 @@ public class Game {
         // creates and returns output
         String output = new String();
         for (int i = 0; i < 26; i++) {
-            output += this.letterStatus[i] + (this.letterStatus[i] == "" ? " " : ALPHABET.charAt(i)); // checks for a blank letter
+            output += this.letterStatus[i] + (this.letterStatus[i].equals("") ? " " : ALPHABET.charAt(i)); // checks for a blank letter
         }
         return output + Colors.RESET;
     }
@@ -207,8 +207,13 @@ public class Game {
         // assigns yellows if there is enough of the letter in the word itself
         for (int i = 0; i < 5; i++) {
 
+            // skips if green
+            if (colors[i] != null && colors[i].equals(Colors.GREEN_BOLD_BRIGHT)) {
+                continue;
+            }
+
             // limits the number of yellows (you cannot have two yellow a's when the original word only has one a)
-            if (counts[guess[i] - 'a'] > 0) {
+            else if (counts[guess[i] - 'a'] > 0) {
                 colors[i] = Colors.YELLOW_BOLD_BRIGHT;
                 counts[guess[i] - 'a']--;
             } 
