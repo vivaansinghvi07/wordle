@@ -53,7 +53,7 @@ public class Game {
     public void getGuess() {
 
         // gets the guess
-        String guess = this.in.nextLine();
+        String guess = this.in.nextLine().toLowerCase();
 
         // returns if the length is not 5
         if (guess.length() != 5) {
@@ -71,10 +71,70 @@ public class Game {
         this.guesses.add(guess);
 
         // checks for a win
-        if (this.word.toLowerCase().equals(guess.toLowerCase())) {
+        if (this.word.equals(guess)) {
             // TODO: Code win
             return;
         }
+
+    }
+
+    // displays the game
+    public String toString() {
+
+        // creates output
+        String output = new String();
+
+        // goes through each guess and prints it
+        for (String guess : guesses) {
+            output += "\n" + this.getColoredWord(guess) + Colors.RESET;
+        }
+
+        return output;
+    }
+    
+    // colors a guess according to the word
+    public String getColoredWord(String guessIn) {
+
+        // stores the colors
+        String[] colors = new String[5];
+
+        // converts guess and word to char arrays 
+        char[] word = this.word.toCharArray();
+        char[] guess = guessIn.toCharArray();
+
+        // stores the counts of letters in the word
+        int[] counts = new int[26];
+        for (char c : word) {
+            counts[c - 'a']++;
+        }
+
+        // checks for matches and makes the color green if so, otherwise if it's contained make it yellow, and if its not in make it white
+        for (int i = 0; i < 5; i++) {
+
+            // makes the color green and subtracts the count occurnece
+            if (word[i] == guess[i]) {
+                colors[i] = Colors.GREEN_BOLD_BRIGHT;
+                counts[guess[i] - 'a']--;
+            } 
+            
+            // limits the number of yellows (you cannot have two yellow a's when the original word only has one a)
+            else if (counts[guess[i] - 'a'] > 0) {
+                colors[i] = Colors.YELLOW_BOLD_BRIGHT;
+                counts[guess[i] - 'a']--;
+            } 
+            
+            // otherwise make it blank
+            else {
+                colors[i] = Colors.RESET;
+            }
+        }
+
+        // fills output
+        String output = new String();
+        for (int i = 0; i < 5; i++) {
+            output += colors[i] + guess[i];
+        }
+        return output;
 
     }
 }
