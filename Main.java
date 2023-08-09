@@ -28,8 +28,10 @@ public class Main {
 
         // winning and losing sequences
         if (game.gameOver == 1) { 
+            Text.clear();
             System.out.println(game + "\n\n" + "You won! Thanks for playing!");
         } else {
+            Text.clear();
             System.out.println(game);
             System.out.println("\nYou lost! The word was " + Colors.GREEN_BOLD_BRIGHT + game.getWord() + Colors.RESET + ". Thanks for playing!");
         }
